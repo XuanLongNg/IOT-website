@@ -2,20 +2,39 @@ import Link from "next/link";
 import useStyles from "./style";
 import DensitySmallIcon from "@mui/icons-material/DensitySmall";
 import { clsx } from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import Avatar from "@mui/material/Avatar";
+
+const HEIGHT_SCROLL = 50;
 const HeaderLayout = () => {
   const { classes } = useStyles();
   // const { classesDrawer} = StyleDrawer();
   const [show, setShow] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const handleClose = () => {
     setShow(false);
   };
   const handleOpen = () => {
     setShow(true);
   };
-  const classNameHeader = clsx("d-flex", classes["style-header"]);
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log(window.scrollY);
+
+      if (window.scrollY > HEIGHT_SCROLL) {
+        setHasScrolled(true);
+      } else setHasScrolled(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [window.scrollY]);
+  const classNameHeader = clsx("d-flex", classes["style-header"], {
+    [classes["is-scroller"]]: hasScrolled,
+  });
   return (
     <div className={classNameHeader}>
       <ul className="d-flex">

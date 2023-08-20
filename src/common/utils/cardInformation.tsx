@@ -32,6 +32,7 @@ export interface DataDashBoardType {
       data: number;
       borderColor: string;
       backgroundColor: string;
+      height: string;
     }[]
   ];
 }
@@ -59,14 +60,16 @@ export default function CardInformation({
   parameter,
   unit,
   data,
+  classes,
 }: {
   title: string;
   parameter: string;
   unit: string;
   data: any;
+  classes: any;
 }) {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275 }} className={classes["root"]}>
       <CardContent>
         <Typography variant="h5" component="div">
           {parameter}{" "}
