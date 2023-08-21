@@ -8,6 +8,8 @@ export default makeStyles()({
     position: "fixed",
     zIndex: "1000",
     backgroundColor: "white",
+    transition:
+      "background-color 0.5s ease, box-shadow 0.5s ease, border-bottom 0.5s ease",
     "& ul": {
       margin: "0",
       padding: "0.5em 2em",
@@ -39,7 +41,7 @@ export default makeStyles()({
     },
   },
   "is-scroller": {
-    backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: "rgba(255,255,255,0.8)!important",
     boxShadow:
       "0 8px 8px 0 rgba(103, 151, 255, 0.3), 0 12px 18px 0 rgba(103, 151, 255, 0.3)",
     borderBottom: "1px solid #f4f4f4 !important",

@@ -32,7 +32,6 @@ export interface DataDashBoardType {
       data: number;
       borderColor: string;
       backgroundColor: string;
-      height: string;
     }[]
   ];
 }
@@ -68,6 +67,9 @@ export default function CardInformation({
   data: any;
   classes: any;
 }) {
+  if (!data.datasets) {
+    return <>Loading...</>;
+  }
   return (
     <Card sx={{ minWidth: 275 }} className={classes["root"]}>
       <CardContent>
