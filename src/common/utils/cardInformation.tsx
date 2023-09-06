@@ -24,16 +24,15 @@ ChartJS.register(
   Legend
 );
 import { Line } from "react-chartjs-2";
+import clsx from "clsx";
 export interface DataDashBoardType {
-  lables: string[];
-  datasets: [
-    {
-      lable: string;
-      data: number;
-      borderColor: string;
-      backgroundColor: string;
-    }[]
-  ];
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+  }[];
 }
 export const options = {
   responsive: true,
@@ -60,18 +59,18 @@ export default function CardInformation({
   unit,
   data,
   classes,
+  newClass = "",
 }: {
   title: string;
-  parameter: string;
+  parameter: number;
   unit: string;
-  data: any;
+  data: DataDashBoardType;
   classes: any;
+  newClass: string;
 }) {
-  if (!data.datasets) {
-    return <>Loading...</>;
-  }
+  const className = clsx(classes["root"], newClass);
   return (
-    <Card sx={{ minWidth: 275 }} className={classes["root"]}>
+    <Card sx={{ minWidth: 275 }} className={className}>
       <CardContent>
         <Typography variant="h5" component="div">
           {parameter}{" "}
@@ -86,7 +85,8 @@ export default function CardInformation({
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {title}
         </Typography>
-        <Line options={options} data={data} />
+        {!data?.datasets && <>Loading...</>}
+        {data?.datasets && <Line options={options} data={data} />}
       </CardContent>
     </Card>
   );

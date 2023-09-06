@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import { makeStyles } from "tss-react/mui";
 import "./globals.css";
+import Providers from "@/common/utils/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -34,7 +35,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div>
           <HeaderLayout />
           <main className={classes.wrapper}>
-            <Suspense>{children}</Suspense>
+            <Suspense>
+              <Providers> {children}</Providers>
+            </Suspense>
           </main>
         </div>
       </body>

@@ -42,15 +42,18 @@ const HeaderLayout = () => {
           <DensitySmallIcon />
         </li>
         <li>
-          <Link href={"#"}>Dashboard</Link>
+          <Link href={"/"}>Dashboard</Link>
         </li>
       </ul>
-      <Avatar
-        alt="avatar"
-        src="images/Nobita.jpg"
-        sx={{ width: 50, height: 50 }}
-        className="avatar"
-      />
+      <Link href={"/profile"}>
+        <Avatar
+          alt="avatar"
+          src="images/Nobita.jpg"
+          sx={{ width: 50, height: 50 }}
+          className="avatar"
+        />
+      </Link>
+
       <Drawer
         className={classes["style-drawer"]}
         anchor={"left"}
@@ -62,10 +65,18 @@ const HeaderLayout = () => {
         </div>
         <div>
           <ul>
+            <Link href={"/"}>
             <li>Dashboard</li>
+            </Link>
+            <Link href={"/temperature"}>
             <li>Temporary</li>
+            </Link>
+            <Link href={"/light"}>
             <li>Light</li>
+            </Link>
+            <Link href={"/humidity"}>
             <li>Humidity</li>
+            </Link>
           </ul>
         </div>
       </Drawer>

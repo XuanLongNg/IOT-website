@@ -39,22 +39,6 @@ export const data = {
       fill: false,
       data: labels.map(() => Math.floor(Math.random() * 101)),
     },
-    {
-      type: "line" as const,
-      label: "temperature (oC)",
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-      fill: true,
-      data: labels.map(() => Math.floor(Math.random() * 101)),
-    },
-    {
-      type: "line" as const,
-      label: "humidity (%)",
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-      fill: true,
-      data: labels.map(() => Math.floor(Math.random() * 101)),
-    },
   ],
 };
 export const options = {
@@ -78,10 +62,10 @@ export const options = {
 };
 export default function ChartComponent() {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275 }} style = {{width: "70%", margin: "3em auto"}}>
       <CardContent>
         <Typography variant="h5" component="div">
-          Dashboard
+          Light chart
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
         <Chart type="line" data={data} />

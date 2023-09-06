@@ -1,4 +1,14 @@
+import { keyframes } from "tss-react";
 import { makeStyles } from "tss-react/mui";
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 export default makeStyles()({
   root: {
@@ -11,13 +21,11 @@ export default makeStyles()({
     "& .btn-action": {
       width: "50%",
     },
-    "& .light-off": {
+    "& .fan": {
       position: "absolute",
-      // right: "40%",
     },
-    "& .light-on": {
-      position: "absolute",
-      // right: "40%",
-    },
+    "& .spin": {
+      animation: `${spin } 2s linear infinite`,
+    }
   },
 });

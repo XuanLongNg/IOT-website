@@ -39,6 +39,31 @@ export default makeStyles()({
       borderBottom: "1px solid rgba(0,0,0,0.3)",
       padding: "10px",
     },
+    "& ul": {
+      height: "100%",
+      margin: 0,
+      listStyle: "none !important",
+      justifyContent: "space-around",
+      alignItems: "center",
+      "& a": {
+        margin: "0",
+        padding: "0",
+        textDecoration: "none",
+        "& li": {
+          padding: "0.5em 4em 0.5em 0",
+          color: "black",
+          fontSize: "1.4rem",
+          lineHeight: "33px",
+          transition: "0.3s",
+          cursor: "pointer",
+          fontWeight: 600,
+          "&:hover": {
+            color: "rgba(0,0,0,0.5)"
+          }
+        },
+
+      },
+    },
   },
   "is-scroller": {
     backgroundColor: "rgba(255,255,255,0.8)!important",
