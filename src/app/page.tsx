@@ -9,6 +9,9 @@ import ButtonFan from "@/components/home/ButtonFan";
 import useGetLuminance from "@/feature/luminance/useGetLuminance";
 import useGetTemperature from "@/feature/temperature/useGetTemperature";
 import useGetHumidity from "@/feature/humidity/useGetHumidity";
+import { useEffect } from "react";
+import { getTime } from "@/common/utils/getTime";
+import BasicBreadcrumbs from "@/common/utils/breadcrumbs";
 export default function Home() {
   const { classes } = useStyles();
   const luminanceData = useGetLuminance().data,
@@ -19,6 +22,9 @@ export default function Home() {
     humidityLoading = useGetHumidity().isLoading;
   return (
     <div className={classes["style-home-page"]}>
+      <div className="breadcrumbs">
+        <BasicBreadcrumbs present="Dashboard" navigation={[]} />
+      </div>
       <div className="d-flex justify-content-between card-mini-dashboard">
         <div>
           <Temperature data={temperatureData} isLoading={temperatureLoading} />
@@ -32,7 +38,11 @@ export default function Home() {
       </div>
       <div className="d-flex">
         <div className="chart">
-          <ChartComponent />
+          <ChartComponent
+            temperature={temperatureData}
+            humidity={humidityData}
+            luminance={luminanceData}
+          />
         </div>
         <div className="btn-action">
           <div className="btn-light">

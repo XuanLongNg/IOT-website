@@ -28,16 +28,31 @@ export default makeStyles()({
       margin: "0.3em 2em",
       //   height: "4em",
       lineHeight: "4em",
+      boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+      transition: "all 0.5s ease",
+      "&:hover": {
+        scale: "1.1",
+      },
     },
   },
   "style-drawer": {
     "& .MuiDrawer-paper": {
-      width: "200px",
+      width: "20vw",
+      minWidth: "200px",
     },
     "& .drawer-title": {
-      height: "var(--hei-he)",
+      height: "var(--height-header)",
       borderBottom: "1px solid rgba(0,0,0,0.3)",
-      padding: "10px",
+      padding: "0.5em 2em 0.5em 2em",
+      "& h2": {
+        fontSize: "1.5em",
+        margin: "0",
+      },
+      "& svg": {
+        "&:hover": {
+          cursor: "pointer",
+        },
+      },
     },
     "& ul": {
       height: "100%",
@@ -45,23 +60,27 @@ export default makeStyles()({
       listStyle: "none !important",
       justifyContent: "space-around",
       alignItems: "center",
+      padding: 0,
       "& a": {
         margin: "0",
         padding: "0",
         textDecoration: "none",
         "& li": {
-          padding: "0.5em 4em 0.5em 0",
+          margin: "0.5em 0.5em",
+          padding: "0.25em 1em",
+          borderRadius: "3px",
           color: "black",
-          fontSize: "1.4rem",
+          // fontSize: "1.4rem",
           lineHeight: "33px",
           transition: "0.3s",
           cursor: "pointer",
           fontWeight: 600,
+          fontSize: "1.2em",
           "&:hover": {
-            color: "rgba(0,0,0,0.5)"
-          }
+            // color: "rgba(255,255,255,1)",
+            backgroundColor: "rgba(124,124,124,0.1)",
+          },
         },
-
       },
     },
   },

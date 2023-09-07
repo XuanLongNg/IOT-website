@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 import HttpStatusCode from "@/common/constants/httpStatusCode";
 import axiosConfig from "@/common/configs/api.config";
-import _omitBy from "lodash/omitBy";
+// import _omitBy from "lodash/omitBy";
 
 /** @class */
 export default class HttpService {
@@ -79,14 +79,14 @@ export default class HttpService {
     return await this.instance.delete(url, config);
   }
 
-  public setHttpConfigs(config?: Partial<AxiosRequestConfig>) {
-    if (config?.baseURL) {
-      this.instance.defaults.baseURL = config.baseURL;
-    }
+  // public setHttpConfigs(config?: Partial<AxiosRequestConfig>) {
+  //   if (config?.baseURL) {
+  //     this.instance.defaults.baseURL = config.baseURL;
+  //   }
 
-    this.instance.defaults = {
-      ...this.instance.defaults,
-      ..._omitBy(config, "BaseURL"),
-    };
-  }
+  //   this.instance.defaults = {
+  //     ...this.instance.defaults,
+  //     ..._omitBy(config, "BaseURL"),
+  //   };
+  // }
 }

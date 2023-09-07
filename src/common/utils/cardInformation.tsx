@@ -64,13 +64,13 @@ export default function CardInformation({
   title: string;
   parameter: number;
   unit: string;
-  data: DataDashBoardType;
+  data: DataDashBoardType | undefined;
   classes: any;
   newClass: string;
 }) {
   const className = clsx(classes["root"], newClass);
   return (
-    <Card sx={{ minWidth: 275 }} className={className}>
+    <Card className={className}>
       <CardContent>
         <Typography variant="h5" component="div">
           {parameter}{" "}

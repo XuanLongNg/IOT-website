@@ -6,11 +6,11 @@ import HumidityType from "./humidity.type";
 class HumidityApiServices extends HttpService {
   constructor() {
     super({
-      baseURL: "https://64e33753bac46e480e786762.mockapi.io/",
+      baseURL: "https://64f8921a824680fd217fc8d1.mockapi.io/",
     });
   }
   getHumidity() {
-    return this.get<HumidityType[]>("/luminance");
+    return this.get<HumidityType[]>("/humidity");
   }
 }
 

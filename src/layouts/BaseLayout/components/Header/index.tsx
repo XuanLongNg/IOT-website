@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import Avatar from "@mui/material/Avatar";
-
+import FormatIndentDecreaseIcon from "@mui/icons-material/FormatIndentDecrease";
 const HEIGHT_SCROLL = 50;
 const HeaderLayout = () => {
   const { classes } = useStyles();
@@ -60,23 +60,33 @@ const HeaderLayout = () => {
         open={show}
         onClose={handleClose}
       >
-        <div className="drawer-title d-flex justify-content-center align-items-center">
+        <div className="drawer-title d-flex justify-content-between align-items-center">
           <h2>Feature</h2>
+          <FormatIndentDecreaseIcon onClick={handleClose} />
         </div>
         <div>
           <ul>
             <Link href={"/"}>
-            <li>Dashboard</li>
+              <li onClick={handleClose}>Dashboard</li>
             </Link>
-            <Link href={"/temperature"}>
-            <li>Temporary</li>
+            <Link href={"/profile"}>
+              <li onClick={handleClose}>Profile</li>
+            </Link>
+            <Link href={"/sensor-data"}>
+              <li onClick={handleClose}>Sensor data</li>
+            </Link>
+            <Link href={"/action"}>
+              <li onClick={handleClose}>Action</li>
+            </Link>
+            {/* <Link href={"/temperature"}>
+              <li>Temporary</li>
             </Link>
             <Link href={"/light"}>
-            <li>Light</li>
+              <li>Light</li>
             </Link>
             <Link href={"/humidity"}>
-            <li>Humidity</li>
-            </Link>
+              <li>Humidity</li>
+            </Link> */}
           </ul>
         </div>
       </Drawer>

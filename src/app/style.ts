@@ -5,8 +5,14 @@ export default makeStyles()({
     padding: "0 10% 10vh",
     margin: "0 auto",
     backgroundColor: "#EBEDEF",
+    "& .breadcrumbs": {
+      padding: "3em 0 0",
+    },
     "& .card-mini-dashboard": {
-      padding: "3em 0",
+      padding: "1em 0 3em",
+      "&>div": {
+        width: "30%",
+      },
     },
     "& .chart": {
       width: "70%",

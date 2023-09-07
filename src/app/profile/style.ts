@@ -2,7 +2,7 @@ import { makeStyles } from "tss-react/mui";
 
 export default makeStyles()({
   root: {
-    height: "50vh",
+    height: "60vh",
     background: 'url("/images/bg.jpg") no-repeat center/cover',
     // filter:  "grayscale(100%)",
     position: "relative",
@@ -34,6 +34,16 @@ export default makeStyles()({
       },
       h6: {
         color: "white",
+      },
+      "& .container-icon": {
+        "& svg": {
+          color: "white",
+          fontSize: "40px",
+          transition: "all 0.5s ease",
+          "&:hover": {
+            scale: "1.3",
+          },
+        },
       },
     },
   },
