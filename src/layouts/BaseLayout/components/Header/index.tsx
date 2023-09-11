@@ -20,8 +20,6 @@ const HeaderLayout = () => {
   };
   useEffect(() => {
     const handleScroll = () => {
-      console.log(window.scrollY);
-
       if (window.scrollY > HEIGHT_SCROLL) {
         setHasScrolled(true);
       } else setHasScrolled(false);
@@ -67,16 +65,40 @@ const HeaderLayout = () => {
         <div>
           <ul>
             <Link href={"/"}>
-              <li onClick={handleClose}>Dashboard</li>
+              <li
+                onClick={() => {
+                  setTimeout(handleClose, 0);
+                }}
+              >
+                Dashboard
+              </li>
             </Link>
             <Link href={"/profile"}>
-              <li onClick={handleClose}>Profile</li>
+              <li
+                onClick={() => {
+                  setTimeout(handleClose, 0);
+                }}
+              >
+                Profile
+              </li>
             </Link>
             <Link href={"/sensor-data"}>
-              <li onClick={handleClose}>Sensor data</li>
+              <li
+                onClick={() => {
+                  setTimeout(handleClose, 0);
+                }}
+              >
+                Sensor data
+              </li>
             </Link>
             <Link href={"/action"}>
-              <li onClick={handleClose}>Action</li>
+              <li
+                onClick={() => {
+                  setTimeout(handleClose, 0);
+                }}
+              >
+                Action
+              </li>
             </Link>
             {/* <Link href={"/temperature"}>
               <li>Temporary</li>

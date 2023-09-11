@@ -14,7 +14,7 @@ function Providers({ children }: React.PropsWithChildren) {
       {children}
       {/* <ReactQueryStreamedHydration>
         </ReactQueryStreamedHydration> */}
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

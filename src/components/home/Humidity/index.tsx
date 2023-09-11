@@ -61,7 +61,7 @@ export default function Humidity({
           : [],
         borderColor: "white",
         backgroundColor: "#F7A531",
-        fill: true,
+        // fill: true,
       },
     ],
   };
