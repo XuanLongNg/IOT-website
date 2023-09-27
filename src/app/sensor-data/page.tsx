@@ -13,7 +13,7 @@ const columns: GridColDef[] = [
     // width: 10
   },
   {
-    field: "sensorId",
+    field: "id_sensor",
     headerName: "Sensor ID",
     // width: 130
   },
@@ -43,12 +43,12 @@ const columns: GridColDef[] = [
 ];
 
 const rows: any = [
-  // {
-  //   id: 1,
-  //   sensorId: "123131",
-  //   time: format(new Date(219317317317), "yyyy-MM-dd HH:mm:ss"),
-  //   temperature: Math.floor(Math.random() * 101),
-  // },
+  {
+    id: 1,
+    sensorId: "123131",
+    time: format(new Date(219317317317), "yyyy-MM-dd HH:mm:ss"),
+    temperature: Math.floor(Math.random() * 101),
+  },
   // {
   //   id: 2,
   //   sensorId: "123516",
@@ -108,7 +108,10 @@ const rows: any = [
 export default function DataTable() {
   const { classes } = useStyles();
   const { data, isLoading } = useGetDataSensor();
-  const [dataRows, setDataRows] = useState();
+  const [dataRows, setDataRows] = useState(rows);
+  useEffect(() => {
+    if (!isLoading) setDataRows(data);
+  }, [isLoading]);
   return (
     <div className={classes.root}>
       <div className="breadcrumbs">
@@ -119,7 +122,7 @@ export default function DataTable() {
       </div>
       <Typography variant="h5">Sensor Data Table</Typography>
       <DataGrid
-        rows={rows}
+        rows={dataRows}
         columns={columns}
         initialState={{
           pagination: {

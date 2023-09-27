@@ -13,8 +13,6 @@ export default function ButtonLight() {
   const handleOnclick = () => {
     const message = !stateBtn ? "1" : "0";
     LedApi.postStateLed(message, 1);
-    console.log("Message: ", message);
-
     setStateBtn(stateBtn ? false : true);
   };
 

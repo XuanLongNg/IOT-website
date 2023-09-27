@@ -14,8 +14,6 @@ export default function ButtonFan() {
   const handleOnclick = () => {
     const message = !stateBtn ? "1" : "0";
     LedApi.postStateLed(message, 2);
-    console.log("Message: ", message);
-
     setStateBtn(stateBtn ? false : true);
   };
   const classNameBtn = clsx(

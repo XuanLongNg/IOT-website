@@ -26,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     socket.on("announce", (message: string) => {
-      console.log("Socket: ", message);
+      // console.log("Socket: ", message);
       queryClient.invalidateQueries(["temperature/GET"]);
       queryClient.invalidateQueries(["humidity/GET"]);
       // queryClient.invalidateQueries('humidity');

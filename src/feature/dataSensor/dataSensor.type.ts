@@ -1,4 +1,4 @@
-export default interface HumidityType {
+export default interface DataSensorType {
   id: number;
   id_sensor: number;
   temperatur: number;
