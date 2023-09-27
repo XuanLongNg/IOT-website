@@ -9,9 +9,11 @@ import ButtonFan from "@/components/home/ButtonFan";
 import useGetLuminance from "@/feature/luminance/useGetLuminance";
 import useGetTemperature from "@/feature/temperature/useGetTemperature";
 import useGetHumidity from "@/feature/humidity/useGetHumidity";
-import { useEffect } from "react";
-import { getTime } from "@/common/utils/getTime";
+import { useEffect, useState } from "react";
 import BasicBreadcrumbs from "@/common/utils/breadcrumbs";
+import socket from "@/common/services/websocket.service";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+
 export default function Home() {
   const { classes } = useStyles();
   const luminanceData = useGetLuminance().data,
@@ -20,6 +22,16 @@ export default function Home() {
     temperatureLoading = useGetTemperature().isLoading,
     humidityData = useGetHumidity().data,
     humidityLoading = useGetHumidity().isLoading;
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    socket.on("announce", (message: string) => {
+      console.log("Socket: ", message);
+      queryClient.invalidateQueries(["temperature/GET"]);
+      queryClient.invalidateQueries(["humidity/GET"]);
+      // queryClient.invalidateQueries('humidity');
+    });
+  }, []);
   return (
     <div className={classes["style-home-page"]}>
       <div className="breadcrumbs">

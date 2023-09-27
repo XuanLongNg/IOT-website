@@ -2,15 +2,20 @@
 
 import HttpService from "@/common/services/http.service";
 import HumidityType from "./humidity.type";
+import { Format_YYYY_MM_DD } from "@/common/utils/getTime";
 
 class HumidityApiServices extends HttpService {
   constructor() {
     super({
-      baseURL: "https://64f8921a824680fd217fc8d1.mockapi.io/",
+      baseURL: "http://localhost:4000",
     });
   }
   getHumidity() {
-    return this.get<HumidityType[]>("/humidity");
+    return this.get<HumidityType[]>(
+      `/api/getHumidityByDate?time=${
+        Format_YYYY_MM_DD(new Date().toString()).time
+      }`
+    );
   }
 }
 

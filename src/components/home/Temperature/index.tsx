@@ -4,7 +4,7 @@ import CardInformation, {
   DataDashBoardType,
 } from "@/common/utils/cardInformation";
 import useStyles from "./style";
-import { getTime } from "@/common/utils/getTime";
+import { Format_HH_mm_ss } from "@/common/utils/getTime";
 import clsx from "clsx";
 import TemperatureType from "@/feature/temperature/temperature.type";
 
@@ -18,19 +18,18 @@ export default function Temperature({
   // if (isLoading) return <div>Loading.....</div>;
 
   const { classes } = useStyles();
-
-  data?.sort((a: any, b: any) => {
-    const t1: any = getTime(a.time),
-      t2: any = getTime(b.time);
-    if (t1.hours == t2.hours) {
-      if (t1.minutes == t2.minutes) {
-        return t1.seconds - t2.seconds;
-      }
-      return t1.minutes - t2.minutes;
-    }
-    return t1.hours - t2.hours;
-  });
-  const range = data ? data[data.length - 1].temperature % 101 : 0;
+  // data?.sort((a: any, b: any) => {
+  //   const t1: any = Format_HH_mm_ss(a.time),
+  //     t2: any = Format_HH_mm_ss(b.time);
+  //   if (t1.hours == t2.hours) {
+  //     if (t1.minutes == t2.minutes) {
+  //       return t2.seconds - t1.seconds;
+  //     }
+  //     return t2.minutes - t1.minutes;
+  //   }
+  //   return t2.hours - t1.hours;
+  // });
+  const range = data ? data[data.length - 1].temperature : 0;
   const classNameTemperature = clsx({
     [classes["too-hot"]]: range > 49,
     [classes.hot]: range > 24 && range < 50,
@@ -39,7 +38,9 @@ export default function Temperature({
     // [classes["too-cold"]]: range < 10,
   });
   const labels: string[] = data
-    ? data.slice(0, 4).map((data: any) => getTime(data.time).time)
+    ? data
+        .slice(data.length - 4, data.length)
+        .map((data: any) => Format_HH_mm_ss(data.time).time)
     : [];
   const fullData = {
     labels,
@@ -47,13 +48,17 @@ export default function Temperature({
       {
         label: "temperature",
         data: data
-          ? data.slice(0, 4).map((data: any) => data.temperature % 101)
+          ? data
+              .slice(data.length - 4, data.length)
+              .map((data: any) => data.temperature)
           : [],
         borderColor: "white",
         backgroundColor: "red",
       },
     ],
   };
+  // console.log(data);
+
   return (
     <CardInformation
       title="Temperature"

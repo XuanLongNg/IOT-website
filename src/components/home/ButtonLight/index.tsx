@@ -3,12 +3,21 @@ import { useState } from "react";
 import useStyles from "./style";
 import Image from "next/image";
 import clsx from "clsx";
+import usePostStateLed from "@/feature/led/usePostStateLed";
+import LedApi from "@/feature/led/led.service";
 export default function ButtonLight() {
-  const [stateBtn, setStateBtn] = useState(true);
+  const [stateBtn, setStateBtn] = useState(false);
   const { classes } = useStyles();
+  const { data, isLoading } = usePostStateLed("0", 1);
+
   const handleOnclick = () => {
+    const message = !stateBtn ? "1" : "0";
+    LedApi.postStateLed(message, 1);
+    console.log("Message: ", message);
+
     setStateBtn(stateBtn ? false : true);
   };
+
   const classNameBtn = clsx(
     "d-flex flex-column justify-content-center align-items-center",
     classes.root
@@ -16,7 +25,7 @@ export default function ButtonLight() {
   return (
     <div className={classNameBtn}>
       <div className="content">Light</div>
-      {stateBtn && (
+      {!stateBtn && (
         <Image
           src="/images/light-off.png"
           width={(600 / 800) * 100}
@@ -25,7 +34,7 @@ export default function ButtonLight() {
           className="light-off"
         />
       )}
-      {!stateBtn && (
+      {stateBtn && (
         <Image
           src="/images/light-on.png"
           width={(600 / 800) * 100}

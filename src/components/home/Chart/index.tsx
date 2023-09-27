@@ -31,7 +31,7 @@ import { Bar, Chart, Line } from "react-chartjs-2";
 import TemperatureType from "../../../feature/temperature/temperature.type";
 import LuminanceType from "@/feature/luminance/luminance.type";
 import HumidityType from "@/feature/humidity/humidity.type";
-import { getTime } from "@/common/utils/getTime";
+import { Format_HH_mm_ss } from "@/common/utils/getTime";
 
 const options = {
   responsive: true,
@@ -72,41 +72,10 @@ export default function ChartComponent({
   humidity: HumidityType[] | undefined;
 }) {
   const labels: string[] = humidity
-    ? humidity.map((data: HumidityType) => getTime(data.time).time)
+    ? humidity
+        .slice(humidity.length - 20, humidity.length)
+        .map((data: HumidityType) => Format_HH_mm_ss(data.time).time)
     : [];
-  humidity?.sort((a: any, b: any) => {
-    const t1: any = getTime(a.time),
-      t2: any = getTime(b.time);
-    if (t1.hours == t2.hours) {
-      if (t1.minutes == t2.minutes) {
-        return t1.seconds - t2.seconds;
-      }
-      return t1.minutes - t2.minutes;
-    }
-    return t1.hours - t2.hours;
-  });
-  luminance?.sort((a: any, b: any) => {
-    const t1: any = getTime(a.time),
-      t2: any = getTime(b.time);
-    if (t1.hours == t2.hours) {
-      if (t1.minutes == t2.minutes) {
-        return t1.seconds - t2.seconds;
-      }
-      return t1.minutes - t2.minutes;
-    }
-    return t1.hours - t2.hours;
-  });
-  temperature?.sort((a: any, b: any) => {
-    const t1: any = getTime(a.time),
-      t2: any = getTime(b.time);
-    if (t1.hours == t2.hours) {
-      if (t1.minutes == t2.minutes) {
-        return t1.seconds - t2.seconds;
-      }
-      return t1.minutes - t2.minutes;
-    }
-    return t1.hours - t2.hours;
-  });
   const data = {
     labels,
     datasets: [
@@ -116,7 +85,11 @@ export default function ChartComponent({
         borderColor: "rgb(253, 242, 35)",
         backgroundColor: "rgba(253, 242, 35,0.5)",
         fill: false,
-        data: luminance ? luminance.map((data) => data.luminance % 10001) : [],
+        data: luminance
+          ? luminance
+              .slice(luminance.length - 20, luminance.length)
+              .map((data) => data.luminance % 10001)
+          : [],
         yAxisID: "y1",
       },
       {
@@ -126,7 +99,9 @@ export default function ChartComponent({
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         fill: true,
         data: temperature
-          ? temperature.map((data) => data.temperature % 101)
+          ? temperature
+              .slice(temperature.length - 20, temperature.length)
+              .map((data) => data.temperature)
           : [],
         yAxisID: "y",
       },
@@ -136,7 +111,11 @@ export default function ChartComponent({
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
         fill: true,
-        data: humidity ? humidity.map((data) => data.humidity % 101) : [],
+        data: humidity
+          ? humidity
+              .slice(humidity.length - 20, humidity.length)
+              .map((data) => data.humidity)
+          : [],
         yAxisID: "y",
       },
     ],

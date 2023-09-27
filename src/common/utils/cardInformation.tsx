@@ -69,6 +69,7 @@ export default function CardInformation({
   newClass: string;
 }) {
   const className = clsx(classes["root"], newClass);
+
   return (
     <Card className={className}>
       <CardContent>

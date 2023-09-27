@@ -6,21 +6,9 @@ import useStyles from "./style";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import axios from "axios";
-import { getTime } from "@/common/utils/getTime";
+import { Format_HH_mm_ss, Format_YYYY_MM_DD } from "@/common/utils/getTime";
 import HumidityType from "@/feature/humidity/humidity.type";
 
-// const labels = ["January", "February", "March", "April", "May", "June", "July"];
-// export const data = {
-//   labels,
-//   datasets: [
-//     {
-//       label: "humidity",
-//       data: labels.map(() => Math.floor(Math.random() * 101)),
-//       borderColor: "white",
-//       backgroundColor: "#00ADD7",
-//     },
-//   ],
-// };
 export default function Humidity({
   data,
   isLoading,
@@ -31,25 +19,27 @@ export default function Humidity({
   // useEffect(() => {}, [isLoading]);
   const { classes } = useStyles();
 
-  data?.sort((a: any, b: any) => {
-    const t1: any = getTime(a.time),
-      t2: any = getTime(b.time);
-    if (t1.hours == t2.hours) {
-      if (t1.minutes == t2.minutes) {
-        return t1.seconds - t2.seconds;
-      }
-      return t1.minutes - t2.minutes;
-    }
-    return t1.hours - t2.hours;
-  });
-  const range = data ? data[data.length - 1].humidity % 101 : 0;
+  // data?.sort((a: any, b: any) => {
+  //   const t1: any = Format_HH_mm_ss(a.time),
+  //     t2: any = Format_HH_mm_ss(b.time);
+  //   if (t1.hours == t2.hours) {
+  //     if (t1.minutes == t2.minutes) {
+  //       return t1.seconds - t2.seconds;
+  //     }
+  //     return t1.minutes - t2.minutes;
+  //   }
+  //   return t1.hours - t2.hours;
+  // });
+  const range = data ? data[data.length - 1].humidity : 0;
   const classNameHumidity = clsx({
     [classes["too-wet"]]: range > 68,
     [classes.wet]: range > 32 && range < 69,
     [classes.dry]: range > -1 && range < 33,
   });
   const labels: string[] = data
-    ? data.slice(0, 4).map((data: HumidityType) => getTime(data.time).time)
+    ? data
+        .slice(data.length - 4, data.length)
+        .map((data: HumidityType) => Format_HH_mm_ss(data.time).time)
     : [];
   const fullData = {
     labels,
@@ -57,7 +47,9 @@ export default function Humidity({
       {
         label: "humidity",
         data: data
-          ? data.slice(0, 4).map((data: HumidityType) => data.humidity % 101)
+          ? data
+              .slice(data.length - 4, data.length)
+              .map((data: HumidityType) => data.humidity)
           : [],
         borderColor: "white",
         backgroundColor: "#F7A531",
