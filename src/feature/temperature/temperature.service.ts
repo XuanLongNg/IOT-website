@@ -12,7 +12,7 @@ class TemperatureApiServices extends HttpService {
   }
   getTemperature() {
     return this.get<TemperatureType[]>(
-      `/api/getTemperatureByDate?time=${
+      `/api/getTemperatureByMonth?time=${
         Format_YYYY_MM_DD(new Date().toString()).time
       }`
     );

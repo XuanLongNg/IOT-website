@@ -26,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     socket.on("announce", (message: string) => {
-      // console.log("Socket: ", message);
+      console.log("Socket: ", message);
       queryClient.invalidateQueries(["temperature/GET"]);
       queryClient.invalidateQueries(["humidity/GET"]);
       // queryClient.invalidateQueries('humidity');
@@ -42,7 +42,7 @@ export default function Home() {
           <Temperature data={temperatureData} isLoading={temperatureLoading} />
         </div>
         <div>
-          <Light data={luminanceData} isLoading={luminanceLoading} />
+          <Light data={temperatureData} isLoading={luminanceLoading} />
         </div>
         <div>
           <Humidity data={humidityData} isLoading={humidityLoading} />
@@ -53,7 +53,7 @@ export default function Home() {
           <ChartComponent
             temperature={temperatureData}
             humidity={humidityData}
-            luminance={luminanceData}
+            luminance={temperatureData}
           />
         </div>
         <div className="btn-action">

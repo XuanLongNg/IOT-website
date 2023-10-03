@@ -2,15 +2,21 @@
 
 import HttpService from "@/common/services/http.service";
 import LuminanceType from "./luminance.type";
+import TemperatureType from "../temperature/temperature.type";
+import { Format_YYYY_MM_DD } from "@/common/utils/getTime";
 
 class LuminanceApiServices extends HttpService {
   constructor() {
     super({
-      baseURL: "https://64e33753bac46e480e786762.mockapi.io/",
+      baseURL: "http://localhost:4000",
     });
   }
   getLuminance() {
-    return this.get<LuminanceType[]>("/luminance");
+    return this.get<TemperatureType[]>(
+      `/api/getTemperatureByMonth?time=${
+        Format_YYYY_MM_DD(new Date().toString()).time
+      }`
+    );
   }
 }
 

@@ -12,7 +12,7 @@ class HumidityApiServices extends HttpService {
   }
   getHumidity() {
     return this.get<HumidityType[]>(
-      `/api/getHumidityByDate?time=${
+      `/api/getHumidityByMonth?time=${
         Format_YYYY_MM_DD(new Date().toString()).time
       }`
     );

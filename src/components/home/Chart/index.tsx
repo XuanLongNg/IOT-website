@@ -48,6 +48,7 @@ const options = {
   },
   scales: {
     y: {
+      max: 100,
       type: "linear" as const,
       display: true,
       position: "left" as const,
@@ -68,7 +69,7 @@ export default function ChartComponent({
   humidity,
 }: {
   temperature: TemperatureType[] | undefined;
-  luminance: LuminanceType[] | undefined;
+  luminance: TemperatureType[] | undefined;
   humidity: HumidityType[] | undefined;
 }) {
   const labels: string[] = humidity
@@ -88,7 +89,7 @@ export default function ChartComponent({
         data: luminance
           ? luminance
               .slice(luminance.length - 20, luminance.length)
-              .map((data) => data.luminance % 10001)
+              .map((data) => data.temperature % 10001)
           : [],
         yAxisID: "y1",
       },
