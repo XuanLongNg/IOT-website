@@ -13,6 +13,14 @@ const colorLuminance = [
     color1: "#A5A416",
     color2: "#01143F",
   }, // dark
+  {
+    color: "red",
+    backgroundColor: "white",
+  },
+  {
+    color: "white",
+    backgroundColor: "red",
+  },
 ];
 export default makeStyles()({
   root: {
@@ -26,5 +34,15 @@ export default makeStyles()({
   },
   dark: {
     backgroundImage: `linear-gradient(140deg,${colorLuminance[2].color1},${colorLuminance[2].color2})`,
+  },
+  warning1: {
+    color: `${colorLuminance[3].color}`,
+    backgroundColor: `${colorLuminance[3].backgroundColor}!important`,
+    backgroundImage: `none`,
+  },
+  warning2: {
+    color: `${colorLuminance[4].color}`,
+    backgroundColor: `${colorLuminance[4].backgroundColor}!important`,
+    backgroundImage: `none`,
   },
 });

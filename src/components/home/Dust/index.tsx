@@ -7,39 +7,39 @@ import { useEffect, useState } from "react";
 import clsx from "clsx";
 import axios from "axios";
 import { Format_HH_mm_ss, Format_YYYY_MM_DD } from "@/common/utils/getTime";
-import HumidityType from "@/feature/humidity/humidity.type";
+import DustType from "@/feature/dust/dust.type";
 
-export default function Humidity({
+export default function Dust({
   data,
   isLoading,
   warning,
+  setWarning,
 }: {
-  data: HumidityType[] | undefined;
+  data: DustType[] | undefined;
   isLoading: boolean;
   warning: boolean;
+  setWarning: Function;
 }) {
   const { classes } = useStyles();
-
-  const range = data ? data[data.length - 1].humidity : 0;
+  const range = data ? data[data.length - 1].dust : 0;
   const [warningClass, setWarningClass] = useState(classes.warning1);
   useEffect(() => {
-    // setWarning(range > 50);
+    setWarning(range > 50);
     setInterval(() => {
       setWarningClass(
         classes.warning2 == warningClass ? classes.warning1 : classes.warning2
       );
     }, 500);
-  }, [warning]);
-  const classNameHumidity = clsx({
+  }, [range]);
+  const classNameDust = clsx({
+    // [classes.dust]: range > 50,
     [warningClass]: warning,
-    [classes["too-wet"]]: range > 68 && !warning,
-    [classes.wet]: range > 32 && range < 69 && !warning,
-    [classes.dry]: range > -1 && range < 33 && !warning,
+    [classes.clear]: !warning && range > -1 && range < 51,
   });
   const labels: string[] = data
     ? data
         .slice(data.length - 4, data.length)
-        .map((data: HumidityType) => Format_HH_mm_ss(data.time).time)
+        .map((data: DustType) => Format_HH_mm_ss(data.time).time)
     : [];
   const fullData = {
     labels,
@@ -49,7 +49,7 @@ export default function Humidity({
         data: data
           ? data
               .slice(data.length - 4, data.length)
-              .map((data: HumidityType) => data.humidity)
+              .map((data: DustType) => data.dust)
           : [],
         borderColor: "white",
         backgroundColor: "#F7A531",
@@ -62,12 +62,12 @@ export default function Humidity({
 
   return (
     <CardInformation
-      title="Humidity"
+      title="Dust"
       parameter={range}
       unit="%"
       data={fullData}
       classes={classes}
-      newClass={classNameHumidity}
+      newClass={classNameDust}
     />
   );
 }

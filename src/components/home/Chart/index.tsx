@@ -32,6 +32,7 @@ import TemperatureType from "../../../feature/temperature/temperature.type";
 import LuminanceType from "@/feature/luminance/luminance.type";
 import HumidityType from "@/feature/humidity/humidity.type";
 import { Format_HH_mm_ss } from "@/common/utils/getTime";
+import DustType from "@/feature/dust/dust.type";
 
 const options = {
   responsive: true,
@@ -48,7 +49,7 @@ const options = {
   },
   scales: {
     y: {
-      max: 100,
+      // max: 100,
       type: "linear" as const,
       display: true,
       position: "left" as const,
@@ -67,10 +68,12 @@ export default function ChartComponent({
   temperature,
   luminance,
   humidity,
+  dust,
 }: {
   temperature: TemperatureType[] | undefined;
-  luminance: TemperatureType[] | undefined;
+  luminance: LuminanceType[] | undefined;
   humidity: HumidityType[] | undefined;
+  dust: DustType[] | undefined;
 }) {
   const labels: string[] = humidity
     ? humidity
@@ -89,7 +92,7 @@ export default function ChartComponent({
         data: luminance
           ? luminance
               .slice(luminance.length - 20, luminance.length)
-              .map((data) => data.temperature % 10001)
+              .map((data) => data.luminance)
           : [],
         yAxisID: "y1",
       },
@@ -103,6 +106,17 @@ export default function ChartComponent({
           ? temperature
               .slice(temperature.length - 20, temperature.length)
               .map((data) => data.temperature)
+          : [],
+        yAxisID: "y",
+      },
+      {
+        type: "line" as const,
+        label: "dust (%)",
+        borderColor: "rgb(0, 0, 0)",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        // fill: true,
+        data: dust
+          ? dust.slice(dust.length - 20, dust.length).map((data) => data.dust)
           : [],
         yAxisID: "y",
       },

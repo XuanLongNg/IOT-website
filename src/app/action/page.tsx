@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Typography from "@mui/material/Typography";
 import BasicBreadcrumbs from "@/common/utils/breadcrumbs";
 import useGetDataDevice from "@/feature/dataDevice/useGetDataDevice";
+import { MenuItem, Select, TextField } from "@mui/material";
 const columns: GridColDef[] = [
   {
     field: "id",
@@ -37,9 +38,20 @@ export default function DataTable() {
   const { classes } = useStyles();
   const { data, isLoading } = useGetDataDevice();
   const [dataRows, setDataRows] = useState(rows);
+  const [value, setValue] = useState("");
+  const [searchBy, setSearchBy] = useState("id");
   useEffect(() => {
-    if (!isLoading) setDataRows(data);
-  }, [isLoading]);
+    if (!isLoading)
+      setDataRows(
+        data?.filter((data) => {
+          if (!value) return true;
+          if (searchBy == "id") return data.id.toString().indexOf(value) != -1;
+          else if (searchBy == "sensor_id")
+            return data.id_device.toString().indexOf(value) != -1;
+          else return data.time.toString().indexOf(value) != -1;
+        })
+      );
+  }, [value, isLoading]);
   return (
     <div className={classes.root}>
       <div className="container">
@@ -51,6 +63,31 @@ export default function DataTable() {
         </div>
 
         <Typography variant="h5">Action History</Typography>
+
+        <TextField
+          label="Search by"
+          variant="filled"
+          value={value}
+          onChange={(e: any) => {
+            console.log(e.target.value);
+            setValue(e.target.value);
+          }}
+        />
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={searchBy}
+          label="Search by"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setSearchBy(e.target.value);
+          }}
+        >
+          {/* <MenuItem value={"default"}>Id</MenuItem> */}
+          <MenuItem value={"id"}>Id</MenuItem>
+          <MenuItem value={"sensor_id"}>Device Id</MenuItem>
+          <MenuItem value={"time"}>Time</MenuItem>
+        </Select>
         <DataGrid
           rows={dataRows}
           columns={columns}

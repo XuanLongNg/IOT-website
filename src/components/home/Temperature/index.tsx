@@ -11,19 +11,31 @@ import TemperatureType from "@/feature/temperature/temperature.type";
 export default function Temperature({
   data,
   isLoading,
+  warning,
 }: {
   data: TemperatureType[] | undefined;
   isLoading: boolean;
+  warning: boolean;
 }) {
   // if (isLoading) return <div>Loading.....</div>;
 
   const { classes } = useStyles();
 
   const range = data ? data[data.length - 1].temperature : 0;
+  const [warningClass, setWarningClass] = useState(classes.warning1);
+  useEffect(() => {
+    // setWarning(range > 50);
+    setInterval(() => {
+      setWarningClass(
+        classes.warning2 == warningClass ? classes.warning1 : classes.warning2
+      );
+    }, 500);
+  }, [warning]);
   const classNameTemperature = clsx({
-    [classes["too-hot"]]: range > 49,
-    [classes.hot]: range > 24 && range < 50,
-    [classes.warn]: range > 0 && range < 25,
+    [warningClass]: warning,
+    [classes["too-hot"]]: range > 49 && !warning,
+    [classes.hot]: range > 24 && range < 50 && !warning,
+    [classes.warn]: range > 0 && range < 25 && !warning,
     // [classes.cold]: range > 9 && range < 30,
     // [classes["too-cold"]]: range < 10,
   });

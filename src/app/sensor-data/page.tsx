@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import Typography from "@mui/material/Typography";
 import BasicBreadcrumbs from "@/common/utils/breadcrumbs";
 import useGetDataSensor from "@/feature/dataSensor/useGetDataSensor";
+import { MenuItem, Select, TextField } from "@mui/material";
 const columns: GridColDef[] = [
   {
     field: "id",
@@ -49,69 +50,33 @@ const rows: any = [
     time: format(new Date(219317317317), "yyyy-MM-dd HH:mm:ss"),
     temperature: Math.floor(Math.random() * 101),
   },
-  // {
-  //   id: 2,
-  //   sensorId: "123516",
-  //   time: format(new Date(818273713611), "yyyy-MM-dd HH:mm:ss"),
-  //   humidity: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 3,
-  //   sensorId: "123516",
-  //   time: format(new Date(1313131241578), "yyyy-MM-dd HH:mm:ss"),
-  //   humidity: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 4,
-  //   sensorId: "123516",
-  //   time: format(new Date(93871378137), "yyyy-MM-dd HH:mm:ss"),
-  //   luminance: Math.floor(Math.random() * 10001),
-  // },
-  // {
-  //   id: 5,
-  //   sensorId: "123516",
-  //   time: format(new Date(93871378137), "yyyy-MM-dd HH:mm:ss"),
-  //   temperature: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 6,
-  //   sensorId: "1235882",
-  //   time: format(new Date(93871312313), "yyyy-MM-dd HH:mm:ss"),
-  //   temperature: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 7,
-  //   sensorId: "123818",
-  //   time: format(new Date(93871378137), "yyyy-MM-dd HH:mm:ss"),
-  //   luminance: Math.floor(Math.random() * 10001),
-  // },
-  // {
-  //   id: 8,
-  //   sensorId: "123516",
-  //   time: format(new Date(93871378137), "yyyy-MM-dd HH:mm:ss"),
-  //   temperature: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 9,
-  //   sensorId: "1231816",
-  //   time: format(new Date(83183162381), "yyyy-MM-dd HH:mm:ss"),
-  //   humidity: Math.floor(Math.random() * 101),
-  // },
-  // {
-  //   id: 10,
-  //   sensorId: "12351621",
-  //   time: format(new Date(17182371837), "yyyy-MM-dd HH:mm:ss"),
-  //   temperature: Math.floor(Math.random() * 101),
-  // },
 ];
 
 export default function DataTable() {
   const { classes } = useStyles();
   const { data, isLoading } = useGetDataSensor();
+  const [value, setValue] = useState("");
+  const [searchBy, setSearchBy] = useState("id");
   const [dataRows, setDataRows] = useState(rows);
   useEffect(() => {
-    if (!isLoading) setDataRows(data);
-  }, [isLoading]);
+    if (!isLoading)
+      setDataRows(
+        data?.filter((data) => {
+          if (!value) return true;
+          if (searchBy == "id") return data.id.toString().indexOf(value) != -1;
+          else if (searchBy == "sensor_id")
+            return data.id_sensor.toString().indexOf(value) != -1;
+          else if (searchBy == "temperature")
+            return data.temperature.toString().indexOf(value) != -1;
+          else if (searchBy == "humidity")
+            return data.humidity.toString().indexOf(value) != -1;
+          else if (searchBy == "luminance")
+            return data.luminance.toString().indexOf(value) != -1;
+          else return data.time.toString().indexOf(value) != -1;
+        })
+      );
+  }, [value, isLoading]);
+
   return (
     <div className={classes.root}>
       <div className="breadcrumbs">
@@ -120,7 +85,44 @@ export default function DataTable() {
           navigation={[{ content: "Dashboard", href: "/" }]}
         />
       </div>
-      <Typography variant="h5">Sensor Data Table</Typography>
+      <div>
+        <Typography variant="h5">Sensor Data Table</Typography>
+        <TextField
+          label="Search by"
+          variant="filled"
+          value={value}
+          onChange={(e: any) => {
+            console.log(e.target.value);
+            setValue(e.target.value);
+          }}
+        />
+        {/* <input
+          type="text"
+          value={value}
+          onChange={(e: any) => {
+            console.log(e.target.value);
+            setValue(e.target.value);
+          }}
+        /> */}
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={searchBy}
+          label="Search by"
+          onChange={(e) => {
+            console.log(e.target.value);
+            setSearchBy(e.target.value);
+          }}
+        >
+          {/* <MenuItem value={"default"}>Id</MenuItem> */}
+          <MenuItem value={"id"}>Id</MenuItem>
+          <MenuItem value={"sensor_id"}>Sensor Id</MenuItem>
+          <MenuItem value={"temperature"}>Temperature</MenuItem>
+          <MenuItem value={"humidity"}>Humidity</MenuItem>
+          <MenuItem value={"luminance"}>Luminance</MenuItem>
+          <MenuItem value={"time"}>Time</MenuItem>
+        </Select>
+      </div>
       <DataGrid
         rows={dataRows}
         columns={columns}

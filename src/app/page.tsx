@@ -13,23 +13,32 @@ import { useEffect, useState } from "react";
 import BasicBreadcrumbs from "@/common/utils/breadcrumbs";
 import socket from "@/common/services/websocket.service";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import Dust from "@/components/home/Dust";
+import useGetDust from "@/feature/dust/useGetDust";
+import Warning from "@/components/home/warning";
 
 export default function Home() {
   const { classes } = useStyles();
+  const [warning, setWarning] = useState<boolean>(false);
   const luminanceData = useGetLuminance().data,
     luminanceLoading = useGetLuminance().isLoading,
     temperatureData = useGetTemperature().data,
     temperatureLoading = useGetTemperature().isLoading,
     humidityData = useGetHumidity().data,
-    humidityLoading = useGetHumidity().isLoading;
+    humidityLoading = useGetHumidity().isLoading,
+    dustData = useGetDust().data,
+    dustLoading = useGetDust().isLoading;
   const queryClient = useQueryClient();
-
+  const setWarningValue = (value: boolean) => {
+    setWarning(value);
+  };
   useEffect(() => {
     socket.on("announce", (message: string) => {
-      console.log("Socket: ", message);
+      // console.log("Socket: ", message);
       queryClient.invalidateQueries(["temperature/GET"]);
       queryClient.invalidateQueries(["humidity/GET"]);
-      // queryClient.invalidateQueries('humidity');
+      queryClient.invalidateQueries(["luminance/GET"]);
+      queryClient.invalidateQueries(["dust/GET"]);
     });
   }, []);
   return (
@@ -39,13 +48,33 @@ export default function Home() {
       </div>
       <div className="d-flex justify-content-between card-mini-dashboard">
         <div>
-          <Temperature data={temperatureData} isLoading={temperatureLoading} />
+          <Temperature
+            data={temperatureData}
+            isLoading={temperatureLoading}
+            warning={warning}
+          />
         </div>
         <div>
-          <Light data={temperatureData} isLoading={luminanceLoading} />
+          <Light
+            data={luminanceData}
+            isLoading={luminanceLoading}
+            warning={warning}
+          />
         </div>
         <div>
-          <Humidity data={humidityData} isLoading={humidityLoading} />
+          <Humidity
+            data={humidityData}
+            isLoading={humidityLoading}
+            warning={warning}
+          />
+        </div>
+        <div>
+          <Dust
+            data={dustData}
+            isLoading={dustLoading}
+            warning={warning}
+            setWarning={setWarningValue}
+          />
         </div>
       </div>
       <div className="d-flex">
@@ -53,7 +82,8 @@ export default function Home() {
           <ChartComponent
             temperature={temperatureData}
             humidity={humidityData}
-            luminance={temperatureData}
+            luminance={luminanceData}
+            dust={dustData}
           />
         </div>
         <div className="btn-action">
@@ -63,6 +93,9 @@ export default function Home() {
           <div className="btn-temperature">
             <ButtonFan />
           </div>
+        </div>
+        <div className="warning">
+          <Warning warning={warning} />
         </div>
       </div>
     </div>

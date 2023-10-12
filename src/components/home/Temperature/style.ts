@@ -8,8 +8,8 @@ const colorTemperature = [
   }, // too hot
   {
     color1: "#E56A0F",
-    color2: "#FCF001",
-    color3: "#FEF99D",
+    color2: "#E56A0F",
+    color3: "#FCF001",
   }, //  hot
   {
     color1: "#FCF001",
@@ -26,6 +26,14 @@ const colorTemperature = [
   //   color2: "#86CDFF",
   //   color3: "#0055A3",
   // }, // too cold
+  {
+    color: "red",
+    backgroundColor: "white",
+  },
+  {
+    color: "white",
+    backgroundColor: "red",
+  },
 ];
 
 export default makeStyles()({
@@ -47,4 +55,14 @@ export default makeStyles()({
   // "too-cold": {
   //   backgroundImage: `linear-gradient(140deg,${colorTemperature[4].color1},${colorTemperature[4].color2},${colorTemperature[4].color3})`,
   // },
+  warning1: {
+    color: `${colorTemperature[3].color}`,
+    backgroundColor: `${colorTemperature[3].backgroundColor}!important`,
+    backgroundImage: `none`,
+  },
+  warning2: {
+    color: `${colorTemperature[4].color}`,
+    backgroundColor: `${colorTemperature[4].backgroundColor}!important`,
+    backgroundImage: `none`,
+  },
 });

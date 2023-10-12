@@ -1,24 +1,24 @@
 "use client";
 
 import HttpService from "@/common/services/http.service";
-import LuminanceType from "./luminance.type";
+import DustType from "./dust.type";
 import { Format_YYYY_MM_DD } from "@/common/utils/getTime";
 
-class LuminanceApiServices extends HttpService {
+class DustApiServices extends HttpService {
   constructor() {
     super({
       baseURL: "http://localhost:4000",
     });
   }
-  getLuminance() {
-    return this.get<LuminanceType[]>(
-      `/api/getLuminanceByMonth?time=${
+  getDust() {
+    return this.get<DustType[]>(
+      `/api/getDustByMonth?time=${
         Format_YYYY_MM_DD(new Date().toString()).time
       }`
     );
   }
 }
 
-const LuminanceApi = new LuminanceApiServices();
+const DustApi = new DustApiServices();
 
-export default LuminanceApi;
+export default DustApi;

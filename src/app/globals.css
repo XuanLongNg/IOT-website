@@ -33,3 +33,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+.warning-1 {
+  color: red;
+  background-color: white;
+}
+
+.warning-2 {
+  color: white;
+  background-color: red;
+}

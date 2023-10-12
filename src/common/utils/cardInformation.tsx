@@ -86,8 +86,14 @@ export default function CardInformation({
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           {title}
         </Typography>
-        {!data?.datasets && <>Loading...</>}
-        {data?.datasets && <Line options={options} data={data} />}
+        {/* {!data?.datasets && <>Loading...</>}
+        {data?.datasets && (
+          <Line
+            style={{ width: "80%!important" }}
+            options={options}
+            data={data}
+          />
+        )} */}
       </CardContent>
     </Card>
   );

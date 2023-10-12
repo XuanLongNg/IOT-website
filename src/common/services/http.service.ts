@@ -78,15 +78,4 @@ export default class HttpService {
   public async delete(url: string, config?: AxiosRequestConfig) {
     return await this.instance.delete(url, config);
   }
-
-  // public setHttpConfigs(config?: Partial<AxiosRequestConfig>) {
-  //   if (config?.baseURL) {
-  //     this.instance.defaults.baseURL = config.baseURL;
-  //   }
-
-  //   this.instance.defaults = {
-  //     ...this.instance.defaults,
-  //     ..._omitBy(config, "BaseURL"),
-  //   };
-  // }
 }

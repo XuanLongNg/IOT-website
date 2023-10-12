@@ -12,35 +12,35 @@ import TemperatureType from "@/feature/temperature/temperature.type";
 export default function Luminance({
   data,
   isLoading,
+  warning,
 }: {
-  data: undefined | TemperatureType[];
+  data: undefined | LuminanceType[];
   isLoading: boolean;
+  warning: boolean;
 }) {
   // if (isLoading) return <div>Loading.....</div>;
 
   const { classes } = useStyles();
+  const range = data ? data[data.length - 1].luminance : 0;
 
-  // data?.sort((a: any, b: any) => {
-  //   const t1: any = Format_HH_mm_ss(a.time),
-  //     t2: any = Format_HH_mm_ss(b.time);
-  //   if (t1.hours == t2.hours) {
-  //     if (t1.minutes == t2.minutes) {
-  //       return t1.seconds - t2.seconds;
-  //     }
-  //     return t1.minutes - t2.minutes;
-  //   }
-  //   return t1.hours - t2.hours;
-  // });
-  const range = data ? data[data.length - 1].temperature % 10001 : 0;
+  const [warningClass, setWarningClass] = useState(classes.warning1);
+  useEffect(() => {
+    setInterval(() => {
+      setWarningClass(
+        classes.warning2 == warningClass ? classes.warning1 : classes.warning2
+      );
+    }, 500);
+  }, [warning]);
   const classNameLuminance = clsx({
-    [classes.bright]: range > 49,
-    [classes.light]: range > 24 && range < 50,
-    [classes.dark]: range > -1 && range < 25,
+    [warningClass]: warning,
+    [classes.bright]: !warning && range > 49,
+    [classes.light]: !warning && range > 24 && range < 50,
+    [classes.dark]: !warning && range > -1 && range < 25,
   });
   const labels: string[] = data
     ? data
         .slice(data.length - 4, data.length)
-        .map((data: TemperatureType) => Format_HH_mm_ss(data.time).time)
+        .map((data: LuminanceType) => Format_HH_mm_ss(data.time).time)
     : [];
   const fullData = {
     labels,
@@ -50,7 +50,7 @@ export default function Luminance({
         data: data
           ? data
               .slice(data.length - 4, data.length)
-              .map((data: TemperatureType) => data.temperature % 10001)
+              .map((data: LuminanceType) => data.luminance)
           : [],
         borderColor: "white",
         backgroundColor: "#F7A531",
